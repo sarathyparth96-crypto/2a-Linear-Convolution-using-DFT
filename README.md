@@ -1,88 +1,93 @@
-**EXPT 2a: LINEAR CONVOLUTION-USING-DFT**
-
-**AIM:**
+# EXPT 2a: LINEAR CONVOLUTION-USING-DFT
+# AIM
 
 To perform and verify linear convolution operation of two given sequences using SCILAB.
 
-**APPARATUS REQUIRED:**
+# APPARATUS REQUIRED 
 
 PC installed with SCILAB
 
-**PROGRAM:**
+# PROGRAM:
 
-LINEAR CONVOLUTION
+# LINEAR CONVOLUTION
 
-```clear;
 clc;
 
-// 1. Define Input Sequences
-x = [1, 1, 1, 1];
-h = [1, 2, 3, 4];
+clear;
+
+x = [1 2 3 4];
+
+h = [2 4 8 6];
 
 m = length(x);
+
 n = length(h);
 
-n_x = 0:(m-1);
-n_h = 0:(n-1);
+a=0:1:m-1;
 
-// 2. Linear Convolution (Manual Direct Formula Method)
-len_y = m + n - 1;
-y = zeros(1, len_y);
+b=0:1:n-1;
 
-for i = 1:len_y
-    for j = 1:m
-        if ((i - j + 1) > 0) & ((i - j + 1) <= n) then
-            y(i) = y(i) + x(j) * h(i - j + 1);
-        end
-    end
-end
+subplot(3,1,1);
 
-n_y = 0:(len_y-1);
+plot2d3(a,x);
 
-// --- 3. Visualization Setup ---
-figure(1);
-clf();
-bg_grid = color("gray95"); // Extremely faint, almost white grid
+xlabel('Time');
 
-// Subplot 1: Input Signal x(n)
-subplot(3, 1, 1);
-plot2d3(n_x, x, style=2);
-plot(n_x, x, 'ro', "MarkerFaceColor", "red", "MarkerSize", 6);
-xtitle('Input Signal x(n)', 'Time (n)', 'Amplitude');
-a = gca();
-a.data_bounds = [-0.5, 0; 3.5, 2]; // Adds padding so 0 and 3 are clearly visible
-xgrid(bg_grid);
+ylabel('Amplitude');
 
-// Subplot 2: Impulse Signal h(n)
-subplot(3, 1, 2);
-plot2d3(n_h, h, style=2);
-plot(n_h, h, 'ro', "MarkerFaceColor", "red", "MarkerSize", 6);
-xtitle('Impulse Signal h(n)', 'Time (n)', 'Amplitude');
-a = gca();
-a.data_bounds = [-0.5, 0; 3.5, 5]; // Adds padding for the peak at amplitude 4
-xgrid(bg_grid);
+title('Graphical Representation of Input Signal X');
 
-// Subplot 3: Output Signal y(n)
-subplot(3, 1, 3);
-plot2d3(n_y, y, style=2);
-plot(n_y, y, 'ro', "MarkerFaceColor", "red", "MarkerSize", 6);
-xtitle('Linear Convolution Output y(n)', 'Time (n)', 'Amplitude');
-a = gca();
-a.data_bounds = [-0.5, 0; 6.5, 12]; // Extends x-axis to 6.5 to fit all output points
-xgrid(bg_grid);
-```
+subplot(3,1,2);
+
+plot2d3(b,h);
+
+xlabel('Time');
+
+ylabel('Amplitude');
+
+title('Graphical Representation of Impulse Signal h');
+
+for i = 1: n+m-1
+
+conv_sum = 0;
+
+for j = 1:i
+
+if (((i-j+1) <= n)&(j <=m))
+
+conv_sum = conv_sum + x(j)*h(i-j+1);
+
+end;
+
+y(i) = conv_sum;
+
+end;
+
+end;
+
+disp(y,'Convolution Sum using Direct Formula Method = ')
+
+subplot(3,1,3);
+
+plot2d3(y)
+
+title('Graphical Representation of output Signal y');
 
 ### CALCULATIONS:
 
-<img width="1005" height="1600" alt="image" src="https://github.com/user-attachments/assets/4ca0e8b7-9c50-416c-8f86-0aee67ce8641" />
-<img width="1076" height="1600" alt="image" src="https://github.com/user-attachments/assets/ba32b8f8-9d8d-4cd8-8bc7-14113acaf1f2" />
+<img width="704" height="1280" alt="image" src="https://github.com/user-attachments/assets/fe9d2cba-1aff-484a-a238-00c3c4ce12e7" />
 
+<img width="792" height="1280" alt="image" src="https://github.com/user-attachments/assets/0a42a716-472a-4cbb-956d-b17e1d441235" />
+
+<img width="648" height="1280" alt="image" src="https://github.com/user-attachments/assets/45d97bca-eaec-440d-acd8-5d09aa9e44d8" />
+
+<img width="894" height="1280" alt="image" src="https://github.com/user-attachments/assets/ff238f0f-a953-4220-8bab-f0dc9d87de5e" />
 
 ### SAMPLE OUTPUT:
 
-<img width="1917" height="897" alt="image" src="https://github.com/user-attachments/assets/da96ee03-e440-4903-8870-594c551f4f3a" />
+<img width="1600" height="1372" alt="image" src="https://github.com/user-attachments/assets/53e1d756-9790-4f28-8557-9603c8b8c1fe" />
 
 
-RESULT:
+# RESULT:
 
 Thus, the linear convolution of the two given sequences were performed and its result was verified.
